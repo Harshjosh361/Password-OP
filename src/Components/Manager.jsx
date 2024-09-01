@@ -34,11 +34,16 @@ function Manager() {
   };
 
   const savePassword = () => {
-    console.log(form);
+    if(form.site && form.password && form.username){
+      console.log(form);
     setpasswordArray([...passwordArray, {...form,id: uuidv4()}]);
     localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form,id: uuidv4()}]));
     setForm({ site: "", username: "", password: "" });
     console.log([...passwordArray, form]);
+    }
+    else{
+      alert("Please fill all the fields to continue :)");
+    }
   };
   const deletePassword = (id) => {
     let c = confirm("Are you sure you want to delete this password?");
@@ -100,10 +105,12 @@ function Manager() {
             </h1>
             <p className=" font-normal text-xl">Your Own Password Manager</p>
           </div>
+          <form>
           <div className="flex flex-col gap-8 p-4">
             <input
               value={form.site}
               onChange={formHandler}
+              required
               type="text"
               name="site"
               placeholder="Enter Website URL"
@@ -113,6 +120,7 @@ function Manager() {
               <input
                 value={form.username}
                 onChange={formHandler}
+                required
                 type="text"
                 name="username"
                 placeholder="Enter username"
@@ -127,6 +135,7 @@ function Manager() {
                   type="password"
                   placeholder="Enter password"
                   className=" rounded-full px-5 py-3 w-full border border-green-500"
+                  required
                 />
                 <img
                   className="absolute right-3 bottom-4"
@@ -139,6 +148,7 @@ function Manager() {
               </div>
             </div>
           </div>
+          </form>
           <div className="flex justify-center items-center">
             <button
               className="flex justify-center items-center m-3 bg-green-500 w-fit text-sm border  border-green-900 rounded-full px-8 py-2"
